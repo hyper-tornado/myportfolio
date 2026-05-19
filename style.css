@@ -30,7 +30,30 @@ body {
 }
 
 /* ============================================================
-   2. コンポーネント (ローディング・ヘッダー・メニュー)
+   2. 共通レイアウト・セクションタイトル
+   ============================================================ */
+.center-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    width: 100%; 
+    margin: 30px 0; 
+}
+
+/* TOPページ専用：外置きの大きなセクションタイトル設定 */
+.main-section-title {
+    text-align: center;
+    margin: 60px auto 30px;
+    font-size: 1.5rem;
+    color: #4781d9;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* ============================================================
+   3. コンポーネント (ローディング・ヘッダー・メニュー)
    ============================================================ */
 #loader {
     position: fixed; inset: 0; 
@@ -55,6 +78,35 @@ body {
 }
 .logo { font-size: 1.5rem; color: #FFFFFF; text-shadow: 2px 2px 0 rgba(0,0,0,0.1); font-weight: bold; }
 
+/* 💡 ヘッダー内のマルチページ切り替えタブ */
+.page-nav-bar {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    padding: 6px 18px;
+    border-radius: 20px;
+    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid transparent;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link.active {
+    background: #FFFFFF;
+    color: #5c81f2;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ハンバーガーメニュー */
 .menu-trigger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
 .menu-trigger span { display: block; width: 25px; height: 3px; background: #FFF; border-radius: 5px; }
 
@@ -68,9 +120,8 @@ body {
 #compact-menu a { color: var(--text-color); text-decoration: none; display: block; padding: 10px; font-weight: bold; }
 
 /* ============================================================
-   3. フィルターボタン・もっと見るボタン
+   4. ボタン・タブ各種
    ============================================================ */
-.center-wrapper { display: flex; justify-content: center; width: 100%; margin: 30px 0; }
 .filter-tab-bar { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
 .tab-btn {
@@ -92,7 +143,7 @@ body {
 }
 
 /* ============================================================
-   4. TOP画面の作品グリッド
+   5. 作品グリッド
    ============================================================ */
 .grid-container {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
@@ -120,7 +171,7 @@ body {
 .window-frame:hover .hover-mask { opacity: 1; }
 
 /* ============================================================
-   5. 詳細ページ（複数画像でも縦に絶対きれいに伸びる版）
+   6. 詳細ポップアップ
    ============================================================ */
 #detail-page {
     position: fixed; top: 0; left: 0; 
@@ -181,7 +232,6 @@ body {
     z-index: 10;
 }
 
-/* ポップアップメイン */
 .detail-body {
     flex: 1; 
     display: flex; 
@@ -192,7 +242,7 @@ body {
     align-items: flex-start;
 }
 
-/* --- 左側：作品表示枠エリア --- */
+/* 詳細内：左側枠 */
 #detail-img-container {
     flex: 1.4; 
     width: 100%;
@@ -204,7 +254,6 @@ body {
     padding-bottom: 55px; 
 }
 
-/* 💻 パソコン風ウィンドウのベース設定 */
 .iframe-wrapper {
     position: relative;
     width: 100%;
@@ -217,7 +266,6 @@ body {
     padding-top: 35px;
 }
 
-/* ウィンドウ上部の「● ● ●」装飾 */
 .iframe-wrapper::before {
     content: "● ● ●"; 
     position: absolute; top: 0; left: 0; 
@@ -231,7 +279,6 @@ body {
     z-index: 10;
 }
 
-/* 通常（1枚のとき）の画像・PDF・Web共通設定 */
 .iframe-wrapper img, 
 .iframe-wrapper iframe {
     width: 100%;
@@ -240,7 +287,6 @@ body {
     display: block;
 }
 
-/* 1枚だけの画像（type-image）のとき、変形を防いでジャストフィットさせる設定 */
 #detail-img-container.type-image .iframe-wrapper {
     aspect-ratio: auto !important;
     height: auto !important;
@@ -252,7 +298,7 @@ body {
     object-fit: contain !important;
 }
 
-/* 🛠️ 【超重要】2枚以上の画像があるとき、縦に綺麗に並べるための専用スタイル */
+/* 複数画像並びスタイル */
 #detail-img-container.multi-active .iframe-wrapper {
     aspect-ratio: auto !important;
     height: auto !important;
@@ -262,7 +308,6 @@ body {
     padding: 55px 20px 20px 20px; 
 }
 
-/* 複数画像時の個々の画像・PDFルール */
 #detail-img-container.multi-active .iframe-wrapper img {
     width: 100% !important;
     height: auto !important;
@@ -276,7 +321,6 @@ body {
     border-radius: 10px;
 }
 
-/* ボタンエリア：通常時 */
 .button-area { 
     display: flex; 
     justify-content: flex-end; 
@@ -288,7 +332,6 @@ body {
     z-index: 100;
 }
 
-/* ボタンエリア：複数画像ある時 */
 #detail-img-container.multi-active .button-area {
     position: relative;
     margin-top: 15px;
@@ -315,7 +358,7 @@ body {
     box-shadow: 0 2px 0 rgba(0,0,0,0.1);
 }
 
-/* --- 右側：説明文・吹き出しエリア --- */
+/* 詳細内：右側テキスト */
 #detail-desc-container {
     flex: 1; 
     width: 100%;
@@ -368,14 +411,7 @@ body {
 }
 
 /* ============================================================
-   6. アニメーション
-   ============================================================ */
-@keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-@keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-
-
-/* ============================================================
-   7. 自己紹介カード（プロフィールエリア・強み強調版）
+   7. 自己紹介カード（プロフィールエリア）
    ============================================================ */
 .profile-wrapper {
     max-width: 1000px;
@@ -388,11 +424,19 @@ body {
     cursor: default !important;
 }
 
-.win-title-text {
-    font-size: 0.8rem;
-    font-weight: bold;
+/* 💡 無印ウィンドウ（ドットだけ）のヘッダー高さ・余白調整 */
+.profile-card .win-header {
+    height: 30px;
+    background: #e1d6ff;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.profile-card .dots {
     color: #6a8bf1;
-    margin-left: 15px;
+    letter-spacing: 3px;
+    font-size: 18px;
 }
 
 .profile-content {
@@ -445,7 +489,7 @@ body {
     color: #f783ac; 
 }
 
-/* アピールポイントを囲むボックス */
+/* アピール強みボックス */
 .strength-box {
     background: #f0f3ff;
     border: 2px dashed #9cbdff;
@@ -454,15 +498,15 @@ body {
     margin-bottom: 25px;
 }
 
+/* 星アイコンの上下完璧中央揃え設定 */
 .box-title {
     font-weight: bold;
     font-size: 0.95rem;
     margin-bottom: 10px;
     color: #3b66cc;
-    /* 👇 ズレを直す魔法の2行（これを追加！） */
     display: flex;
     align-items: center;
-    gap: 6px; /* 星と文字の間の隙間をお好みで調整（5px〜8pxくらいが綺麗です） */
+    gap: 6px; 
 }
 
 .strength-box ul {
@@ -484,6 +528,9 @@ body {
 
 .strength-box li::before {
     content: "▶︎";
+    position: absolute;
+    left: 0;
+    color: #7b84f3;
 }
 
 .profile-divider {
@@ -498,7 +545,7 @@ body {
     color: #4781d9;
 }
 
-/* タイムライン箇条書き設定 */
+/* タイムライン */
 .history-list {
     list-style: none;
     font-size: 0.9rem;
@@ -529,7 +576,13 @@ body {
 }
 
 /* ============================================================
-   8. レスポンシブ（スマホ対応）
+   8. アニメーション
+   ============================================================ */
+@keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+/* ============================================================
+   9. レスポンシブ（スマホ・タブレット対応）
    ============================================================ */
 @media (max-width: 900px) {
     .detail-body { 

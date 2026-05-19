@@ -53,64 +53,79 @@ function showMoreWorks() {
     }
 }
 
-// 👑 1枚も複数枚も完全に綺麗に処理するopenDetail関数
-function openDetail(title, links, desc, tool="", time="", target="", scene="") {
+// 作品の形式に合せて、プレビュー枠をぴったりフィットさせる関数
+function openDetail(title, link, desc, tool="", time="", target="", scene="") {
     const detailBody = document.getElementById('detail-body');
     const detailTitle = document.getElementById('detail-title');
     detailTitle.innerText = title;
 
-    // カンマ「,」で区切られたファイルパスを配列に分解する
-    const linkArray = links.split(',').map(l => l.trim());
-    
-    let innerContentHtml = "";
-    let buttonAreaHtml = "";
+    let previewHtml = "";
 
-    // 画像の枚数分ループを回してHTMLを組み立てる
-    linkArray.forEach((link, index) => {
-        const isImage = link.match(/\.(jpg|jpeg|png|gif|PNG)$/i);
-        const isPdf = link.match(/\.pdf$/i);
+    // 拡張子からファイルタイプを細かくチェック
+    const isImage = link.match(/\.(jpg|jpeg|png|gif|PNG)$/i) || link.includes(','); // 💡カンマ区切りの文字列も画像として判定する
+    const isPdf = link.match(/\.pdf$/i);
 
-        if (isImage) {
-            innerContentHtml += `<img src="${link}" alt="プレビュー ${index + 1}">`;
-            buttonAreaHtml += `<a href="${link}" target="_blank" class="visit-link">全画面で開く ${linkArray.length > 1 ? index + 1 : ''} ↗</a>`;
-        } else if (isPdf) {
-            innerContentHtml += `<iframe src="${link}#toolbar=0&navpanes=0&scrollbar=1&view=FitH"></iframe>`;
-            buttonAreaHtml += `<a href="${link}" target="_blank" class="visit-link">全画面で開く ↗</a>`;
+    if (isImage) {
+        // 💡 複数画像（カンマ区切り）に対応するための分岐処理を追加
+        let imageTags = "";
+        let containerClass = "type-image";
+
+        if (link.includes(',')) {
+            // カンマで区切って配列にし、1枚ずつの<img>タグを作る
+            const imgList = link.split(',').map(s => s.trim());
+            imageTags = imgList.map(src => `<img src="${src}" alt="プレビュー">`).join('');
+            containerClass = "multi-active"; // 2枚以上のときはCSSの並び替えクラスを適用
         } else {
-            innerContentHtml += `<iframe src="${link}"></iframe>`;
-            buttonAreaHtml += `<a href="${link}" target="_blank" class="visit-link">全画面で開く ↗</a>`;
+            // 1枚だけのとき
+            imageTags = `<img src="${link}" alt="プレビュー">`;
         }
-    });
 
-    // 1枚目パスの拡張子でベースのレイアウト（クラス名）を決める
-    const firstLink = linkArray[0];
-    const isFirstImage = firstLink.match(/\.(jpg|jpeg|png|gif|PNG)$/i);
-    let containerClass = isFirstImage ? "type-image" : "type-pdf";
-
-    // 🌟 2枚以上あるときは「multi-active」クラスを合体させて、枠を下に自動拡張させる
-    if (linkArray.length > 1) {
-        containerClass += " multi-active";
+        previewHtml = `
+            <div id="detail-img-container" class="${containerClass}">
+                <div class="iframe-wrapper">
+                    ${imageTags}
+                </div>
+                <div class="button-area">
+                    <a href="${link.split(',')[0].trim()}" target="_blank" class="visit-link">全画面で開く ↗</a>
+                </div>
+            </div>`;
+    } else if (isPdf) {
+        previewHtml = `
+            <div id="detail-img-container" class="type-pdf">
+                <div class="iframe-wrapper">
+                    <iframe src="${link}#toolbar=0&navpanes=0&scrollbar=1&view=FitH"></iframe>
+                </div>
+                <div class="button-area">
+                    <a href="${link}" target="_blank" class="visit-link">全画面で開く ↗</a>
+                </div>
+            </div>`;
+    } else {
+        previewHtml = `
+            <div id="detail-img-container" class="type-web">
+                <div class="iframe-wrapper">
+                    <iframe src="${link}"></iframe>
+                </div>
+                <div class="button-area">
+                    <a href="${link}" target="_blank" class="visit-link">全画面で開く ↗</a>
+                </div>
+            </div>`;
     }
 
-    let previewHtml = `
-        <div id="detail-img-container" class="${containerClass}">
-            <div class="iframe-wrapper">
-                ${innerContentHtml}
-            </div>
-            <div class="button-area">
-                ${buttonAreaHtml}
-            </div>
-        </div>`;
-
-    // 説明文吹き出しの処理
+    // 👑 【完全解決】自動での改行分割を完全にやめました。
+    // HTMLから送られてきた文字の中に「<div」が入っているかどうかで処理を分けします。
     let balloonsHtml = "";
+    
     if (desc.includes('<div')) {
+        // 【DIVタグが書いてある場合】
+        // あなたがHTMLに書いた複数の <div>...</div> 構造をそのまま画面に反映させます。
         balloonsHtml = desc;
     } else {
+        // 【DIVタグがない、普通のテキストの場合】
+        // 全体を自動的に1つの吹き出しクラス（balloon-text）で包みます。（<br>での改行もそのまま有効になります）
         balloonsHtml = `<div class="balloon-text">${desc}</div>`;
     }
 
-    // 下部スペックエリアの処理
+    // スペックエリアの処理
     let specHtml = "";
     if (tool || time || target || scene) {
         specHtml = `
