@@ -43,31 +43,35 @@
             <div class="window-frame profile-card">
                 <div class="win-header">
                     <span class="dots">•••</span>
-                </div>                
+                </div>
                 <div class="profile-content">
                     <div class="profile-avatar">
                         <img src="image/utiwa.png" alt="プロフィールアイコン">
                     </div>
-                    
+
                     <div class="profile-text">
                         <h2>名前 <span class="job-sub">/ Web & Goods Designer</span></h2>
                         <p class="intro-lead">「ワクワクを形にするデザイナー」を目指しています。</p>
-                        
+
                         <div class="strength-box">
                             <p class="box-title">⭐️ 将来の目標と目指す姿</p>
-                            <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; font-weight: bold; color: #4781d9;">
+                            <p
+                                style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; font-weight: bold; color: #4781d9;">
                                 アニメ・音楽・映画などのエンタメグッズ制作や特設サイトのデザインを手がけることです。グッズとWebの両面からエンタメを盛り上げるデザイナーを目指しています。</p>
-                            
+
                             <p class="box-title">⭐️ 私のスキルと実務での貢献方法</p>
                             <ul>
-                                <li><strong>自力で形にするデザイン技術<br></strong>本格的なデザイン学習は2025年12月（Illustrator/Photoshop）からですが、このポートフォリオに掲載しているレベルのグッズデザインやWebカンプ、バナー等はすべて自力で制作できる技術を身につけました。</li>
-                                <li><strong>実装を考慮できる元SEの強み<br></strong>前職はSEとしてWebアプリ開発（バックエンド・設計等）に従事していました。そのため、Webサイトの仕様や実装のしやすさを論理的に考慮したデザイン制作が可能です。</li>
-                                <li><strong>Web実装への理解と連携力<br></strong>前職でのコーディング経験は簡易な画面修正やテストが中心でしたが、コードの構造やシステム側の動きを理解しているため、エンジニアと共通言語でスムーズに会話ができます。Web制作時もチームのハブとして貢献できます。</li>
+                                <li><strong>自力で形にするデザイン技術<br></strong>本格的なデザイン学習は2025年12月（Illustrator/Photoshop）からですが、このポートフォリオに掲載しているレベルのグッズデザインやWebカンプ、バナー等はすべて自力で制作できる技術を身につけました。
+                                </li>
+                                <li><strong>実装を考慮できる元SEの強み<br></strong>前職はSEとしてWebアプリ開発（バックエンド・設計等）に従事していました。そのため、Webサイトの仕様や実装のしやすさを論理的に考慮したデザイン制作が可能です。
+                                </li>
+                                <li><strong>Web実装への理解と連携力<br></strong>前職でのコーディング経験は簡易な画面修正やテストが中心でしたが、コードの構造やシステム側の動きを理解しているため、エンジニアと共通言語でスムーズに会話ができます。Web制作時もチームのハブとして貢献できます。
+                                </li>
                             </ul>
                         </div>
 
                         <hr class="profile-divider">
-                        
+
                         <div class="history-section">
                             <h3>⏳ これまでの来歴</h3>
                             <ul class="history-list">
@@ -119,10 +123,18 @@
 
         <section style="max-width: 1000px; margin: 60px auto 40px; padding: 0 20px;">
             <h2 style="text-align: center; margin-bottom: 30px; font-size: 1.5rem; color: #4781d9;">✨ PICK UP WORKS</h2>
-            
-            <div class="grid-container">
+
+            <div class="grid-container" id="work-grid">
                 <div class="work-card goods shown">
-                    <div class="window-frame" onclick="openDetail('アクリルスタンド', 'image/akusutajk.png', '『推しと過ごす生活』をテーマに...', '・Illustrator...', '40分', '10代〜40代男女', 'グッズ販売...')">
+                    <div class="window-frame" onclick="openDetail(
+                        'アクリルスタンド', 
+                        'image/akusutajk.png,image/akusutajk.png', 
+                        '『推しと過ごす生活』をテーマに目の前にキャラクターがいてこちらをみているようなデザインにしました。', 
+                        '・Illustrator（カットライン作成）<br>・Photoshop（アクリル効果作成）<br>・AIGAZOU（キャラクターの画像生成に使用）', 
+                        '40分', 
+                        '10代〜40代男女', 
+                        'グッズ販売、展示会、ライブ、イベント、推し活'
+                    )">
                         <div class="win-header"><span class="dots">•••</span></div>
                         <div class="win-content">
                             <img src="image/akusutajk.png" alt="">
@@ -132,7 +144,13 @@
                 </div>
 
                 <div class="work-card goods shown">
-                    <div class="window-frame" onclick="openDetail('うちわ', 'image/utiwa.png', 'アイドルの応援グッズ...', '・Illustrator...', '8時間', '10代〜30代女性', 'グッズ販売...')">
+                    <div class="window-frame" onclick="openDetail(
+                    'うちわ', 'image/utiwa.png', 
+                    'アイドルの応援グッズ「うちわ」を刺繍風に作りました。', 
+                    '・Illustrator（作字、デザイン構成）<br>・Photoshop（刺繍加工、うちわ持ち手取り付け、青リボン＆ピンクリボンの生成と加工）', 
+                    '8時間', 
+                    '10代〜30代女性', 
+                    'グッズ販売、展示会、ライブ、イベント、推し活')">
                         <div class="win-header"><span class="dots">•••</span></div>
                         <div class="win-content">
                             <img src="image/utiwa.png" alt="">
@@ -143,7 +161,8 @@
             </div>
 
             <div class="center-wrapper" style="margin-top: 40px;">
-                <a href="works.html" id="load-more" style="text-decoration: none; text-align: center; display: inline-block;">すべての作品を見る（Works） →</a>
+                <a href="works.html" id="load-more"
+                    style="text-decoration: none; text-align: center; display: inline-block;">すべての作品を見る（Works） →</a>
             </div>
         </section>
     </main>
