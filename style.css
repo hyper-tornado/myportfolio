@@ -636,5 +636,161 @@ body {
     .history-date {
         width: auto;
         margin-bottom: 2px;
+    }  
+}
+
+/* ============================================================
+   🌟 ファーストビュー（文字なし・青枠目一杯フルスライダー）
+============================================================ */
+.hero-section {
+    max-width: 1000px;
+    margin: 85px auto 25px; /* ヘッダーとの隙間 */
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* ヒーローウィンドウ枠 */
+.hero-window {
+    background: #FFFFFF !important;
+    border: 4px solid #b6c7ff !important; /* 他のウィンドウと統一された綺麗なパープルブルー */
+    border-radius: 20px !important;
+    box-shadow: 0 8px 24px rgba(143, 167, 255, 0.08) !important;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ウィンドウタイトルテキスト */
+.win-title-text {
+    font-size: 0.85rem !important;
+    color: #8fa7ff !important;
+    font-weight: bold !important;
+    margin-left: 10px !important;
+    font-family: 'Kosugi Maru', sans-serif !important;
+}
+
+/* ウィンドウ内側：余白をゼロにして画像が枠一杯に広がるように修正 */
+.hero-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #FFFFFF !important;
+    overflow: hidden;
+    display: block !important;
+    width: 100%;
+}
+
+/* スライダーの表示窓（横幅100%・デスクトップでの絶妙な高さに調整） */
+.hero-slider-zone {
+    width: 100%;
+    height: 380px; /* 💡デスクトップ画面でダイナミックに見える高さ */
+    overflow: hidden;
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 画像を横一列に100%で並べるトラック */
+.slider-track {
+    display: flex;
+    width: 400%; /* 画像4枚分（100% × 4） */
+    height: 100%;
+    animation: scrollFullSlider 20s linear infinite; /* 💡20秒かけてゆっくり1周ループ */
+}
+
+/* ============================================================
+   🌟 ファーストビュー（文字なし・青枠目一杯フルスライダー：4作品対応版）
+============================================================ */
+/* ============================================================
+   🌟 ファーストビュー（ウィンドウ全体を大きく拡大＋余白完全ゼロ版）
+============================================================ */
+.hero-section {
+    max-width: 1600px; /* 💡元の1000pxから1200pxに広げて、ウィンドウ全体を大きくしました */
+    margin: 95px auto 200px; /* 上下のバランスを微調整 */
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* ヒーローウィンドウ枠 */
+.hero-window {
+    background: #FFFFFF !important;
+    border: 4px solid #6673ee !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 24px rgba(143, 167, 255, 0.08) !important;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ウィンドウタイトルテキスト */
+.win-title-text {
+    font-size: 0.85rem !important;
+    color: #6673ee !important;
+    font-weight: bold !important;
+    margin-left: 10px !important;
+    font-family: 'Kosugi Maru', sans-serif !important;
+}
+
+/* ウィンドウ内側 */
+.hero-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #FFFFFF !important;
+    overflow: hidden;
+    display: block !important;
+    width: 100%;
+}
+
+/* スライダーの表示窓：ウィンドウの横幅拡大に合わせて、高さも320pxに引き上げます */
+.hero-slider-zone {
+    width: 100%;
+    height: 320px !important; /* 💡元の260pxから320pxに拡大！上下の余白なしをキープ */
+    overflow: hidden;
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+}
+
+/* 画像を横一列に並べるトラック */
+.slider-track {
+    display: flex;
+    width: max-content !important; 
+    height: 100% !important;
+    animation: scrollFullSlider 50s linear infinite;
+}
+
+/* 作品画像：拡大した窓（320px）の縦いっぱいに100%密着表示 */
+.slider-track img {
+    width: auto !important;       
+    height: 100% !important;      /* 💡新しい縦幅320pxに自動で100%フィット */
+    display: block !important;    
+    object-fit: cover !important; /* 余白を作らずに100%敷き詰める */
+    margin: 0 !important;         
+    padding: 0 !important;        /* 上下左右の余白は完全にゼロ */
+    box-sizing: border-box;
+    
+    /* 作品同士を分ける境界線 */
+    border-right: 3px solid #b6c7ff !important; 
+}
+
+/* 最後の画像の右側の線だけ消す設定 */
+.slider-track img:last-child {
+    border-right: none !important;
+}
+
+/* 無限ループアニメーション */
+@keyframes scrollFullSlider {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* 📱 スマホ用レスポンシブ（スマホでは画面幅いっぱいに自動でフィット） */
+@media (max-width: 768px) {
+    .hero-section {
+        margin: 75px auto 15px;
+        padding: 0 10px; /* スマホでは画面を広く使うため端の余白を少しスリムに */
+    }
+    .hero-slider-zone {
+        height: 160px !important; /* スマホ側も元の140pxから160pxに少し大きく修正 */
     }
 }
