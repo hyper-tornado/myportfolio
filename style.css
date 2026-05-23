@@ -756,7 +756,7 @@ body {
     display: flex;
     width: max-content !important; 
     height: 100% !important;
-    animation: scrollFullSlider 50s linear infinite;
+    animation: scrollFullSlider 84s linear infinite;
 }
 
 /* 作品画像：拡大した窓（320px）の縦いっぱいに100%密着表示 */
