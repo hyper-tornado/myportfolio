@@ -230,32 +230,40 @@ body {
    ============================================================ */
 .filter-tab-bar {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 5px; /* ボタン同士の隙間を少し狭める */
+    flex-wrap: nowrap; /* 改行を禁止する（ここが重要！） */
     justify-content: center;
-}
+    overflow-x: auto; /* 画面からはみ出る場合は横スクロールさせる */
+    padding-bottom: 10px; /* スクロールバーが見やすいように */
+    width: 100%;
+    -webkit-overflow-scrolling: touch; /* iOSでのスクロールを滑らかに */}
 
 .tab-btn {
     background: #FFFFFF;
     border: 2px solid #9cbdff;
     color: #6a8bf1;
-    padding: 8px 25px;
+    padding: 8px 20px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: bold;
     font-family: inherit;
     transition: 0.3s;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+    font-size: 0.85rem; /* スマホ用にフォントも少し小さく */
+    white-space: nowrap; /* 文字が折り返さないようにする */
 }
 
 .tab-btn:hover {
-    transform: translateY(-2px);
+    background-color: #f0f7ff; /* ホバー時の背景色を追加して反応をわかりやすく */
+    color: #4781d9; /* テキストカラーを濃く */
+    border-color: #4781d9; /* 境界線を濃く */
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1); /* 影を少し太くして浮き上がりを表現 */
 }
 
 .tab-btn.active {
     background: #4781d9;
     color: #FFFFFF;
-    transform: translateY(2px);
+    border-color: #4781d9;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -583,10 +591,10 @@ body {
 .balloon-text::before {
     content: "";
     position: absolute;
-    left: -10px;
-    top: 22px;
+    left: -12px; /* 枠線の太さを考慮して調整 */
+    top: 25px;
     border-style: solid;
-    border-width: 8px 10px 8px 0;
+    border-width: 9px 12px 9px 0;
     border-color: transparent #b8baff transparent transparent;
     z-index: 1;
 }
@@ -594,10 +602,11 @@ body {
 .balloon-text::after {
     content: "";
     position: absolute;
-    left: -8px;
-    top: 22px;
+    /* 枠から離れないよう、leftをマイナス方向に調整します */
+    left: -10px; 
+    top: 25px;
     border-style: solid;
-    border-width: 8px 10px 8px ;
+    border-width: 9px 12px 9px 0;
     border-color: transparent #eef7ff transparent transparent;
     z-index: 2;
 }
@@ -776,7 +785,7 @@ body {
    ============================================================ */
 .hero-section {
     max-width: 1200px;
-    margin: 0px auto 60px;
+    margin: 5px auto 60px;
     padding: 0 20px;
     box-sizing: border-box;
 }
