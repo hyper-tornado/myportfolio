@@ -776,7 +776,7 @@ body {
    ============================================================ */
 .hero-section {
     max-width: 1200px;
-    margin: 10px auto 60px;
+    margin: 0px auto 60px;
     padding: 0 20px;
     box-sizing: border-box;
 }
