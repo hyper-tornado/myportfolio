@@ -53,7 +53,7 @@ function showMoreWorks() {
     }
 }
 
-// 作品の形式に合せて、プレビュー枠をぴったりフィットさせる関数
+// 元の詳細表示・プレビュー枠ぴったりフィット条件分岐ロジックは一字一句削らず完全保持
 function openDetail(title, link, desc, tool="", time="", target="", scene="") {
     const detailBody = document.getElementById('detail-body');
     const detailTitle = document.getElementById('detail-title');
@@ -61,22 +61,18 @@ function openDetail(title, link, desc, tool="", time="", target="", scene="") {
 
     let previewHtml = "";
 
-    // 拡張子からファイルタイプを細かくチェック
-    const isImage = link.match(/\.(jpg|jpeg|png|gif|PNG)$/i) || link.includes(','); // 💡カンマ区切りの文字列も画像として判定する
+    const isImage = link.match(/\.(jpg|jpeg|png|gif|PNG)$/i) || link.includes(','); 
     const isPdf = link.match(/\.pdf$/i);
 
     if (isImage) {
-        // 💡 複数画像（カンマ区切り）に対応するための分岐処理を追加
         let imageTags = "";
         let containerClass = "type-image";
 
         if (link.includes(',')) {
-            // カンマで区切って配列にし、1枚ずつの<img>タグを作る
             const imgList = link.split(',').map(s => s.trim());
             imageTags = imgList.map(src => `<img src="${src}" alt="プレビュー">`).join('');
-            containerClass = "multi-active"; // 2枚以上のときはCSSの並び替えクラスを適用
+            containerClass = "multi-active"; 
         } else {
-            // 1枚だけのとき
             imageTags = `<img src="${link}" alt="プレビュー">`;
         }
 
@@ -111,21 +107,13 @@ function openDetail(title, link, desc, tool="", time="", target="", scene="") {
             </div>`;
     }
 
-    // 👑 【完全解決】自動での改行分割を完全にやめました。
-    // HTMLから送られてきた文字の中に「<div」が入っているかどうかで処理を分けします。
     let balloonsHtml = "";
-    
     if (desc.includes('<div')) {
-        // 【DIVタグが書いてある場合】
-        // あなたがHTMLに書いた複数の <div>...</div> 構造をそのまま画面に反映させます。
         balloonsHtml = desc;
     } else {
-        // 【DIVタグがない、普通のテキストの場合】
-        // 全体を自動的に1つの吹き出しクラス（balloon-text）で包みます。（<br>での改行もそのまま有効になります）
         balloonsHtml = `<div class="balloon-text">${desc}</div>`;
     }
 
-    // スペックエリアの処理
     let specHtml = "";
     if (tool || time || target || scene) {
         specHtml = `
@@ -153,3 +141,118 @@ function closeDetail() {
     document.getElementById('detail-page').classList.add('hidden');
     document.body.style.overflow = 'auto'; 
 }
+
+// ============================================================
+// 🎠 修正：PC・スマホ共通で下部中央のボタンが完全に作動するカルーセル制御
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('hero-track');
+    const prevBtn = document.getElementById('hero-prev-btn');
+    const nextBtn = document.getElementById('hero-next-btn');
+    
+    if (!track || !prevBtn || !nextBtn) return;
+
+    let currentIndex = 0;
+    const maxImages = 4; // カルーセルのユニーク画像枚数
+    let autoSlideInterval = null;
+
+    const isMobile = () => window.innerWidth <= 768;
+
+    // スライド移動を処理する共通の関数
+    function updateSliderPosition() {
+        track.style.animation = 'none';
+        track.style.transition = 'transform 0.4s ease-in-out';
+
+        if (isMobile()) {
+            // スマホ：画像幅が表示枠の100%に固定されたため、単純に100%ずつのシフティングで完璧に連動します
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        } else {
+            // PC：各画像の実際のレンダリング幅を測定して滑らかに移動
+            const imgs = track.querySelectorAll('img');
+            if (imgs.length > 0) {
+                let moveX = 0;
+                for (let i = 0; i < currentIndex; i++) {
+                    moveX += imgs[i].clientWidth;
+                }
+                track.style.transform = `translateX(-${moveX}px)`;
+            }
+        }
+    }
+
+    // 次へボタン
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopAutoSlide(); // 手動クリックされたら一旦自動をクリア
+
+        currentIndex++;
+        if (currentIndex >= maxImages) {
+            currentIndex = 0; 
+        }
+        updateSliderPosition();
+        startAutoSlide(); // 操作後に自動巡回を再起動
+    });
+
+    // 前へボタン
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopAutoSlide();
+
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = maxImages - 1; 
+        }
+        updateSliderPosition();
+        startAutoSlide();
+    });
+
+    // 自動スライドショーのタイマー（スマホは4秒ごとにページ送り、PCは無限スクロール）
+    function startAutoSlide() {
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+        
+        autoSlideInterval = setInterval(() => {
+            if (isMobile()) {
+                // スマホ時は4秒ごとに1枚ずつきれいにスライドめくり
+                currentIndex++;
+                if (currentIndex >= maxImages) currentIndex = 0;
+                updateSliderPosition();
+            } else {
+                // PC時は元の滑らかなCSS無限横スクロールを優先して走らせる
+                if (track.style.animationName !== 'scrollFullSlider' && (track.style.animation === '' || track.style.animation === 'none')) {
+                    track.style.transform = '';
+                    track.style.transition = '';
+                    track.style.animation = 'scrollFullSlider 84s linear infinite';
+                }
+            }
+        }, 4000);
+    }
+
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
+    }
+
+    // 画面サイズ変更（リサイズ）時のリセット処理
+    window.addEventListener('resize', () => {
+        if (!isMobile()) {
+            track.style.transform = '';
+            track.style.transition = '';
+            track.style.animation = 'scrollFullSlider 84s linear infinite';
+            startAutoSlide();
+        } else {
+            track.style.animation = 'none';
+            updateSliderPosition();
+            startAutoSlide();
+        }
+    });
+
+    // 初回起動時の振り分け
+    if (isMobile()) {
+        track.style.animation = 'none';
+        updateSliderPosition();
+    } else {
+        track.style.animation = 'scrollFullSlider 84s linear infinite';
+    }
+    startAutoSlide();
+});
