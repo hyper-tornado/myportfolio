@@ -776,14 +776,14 @@ body {
    ============================================================ */
 .hero-section {
     max-width: 1200px;
-    margin: 40px auto 60px;
+    margin: 10px auto 60px;
     padding: 0 20px;
     box-sizing: border-box;
 }
 
 .hero-window {
     background: #FFFFFF;
-    border: 4px solid #6673ee;
+    border: 2px solid #6673ee;
     border-radius: 20px;
     box-shadow: 0 12px 30px rgba(102, 115, 238, 0.15);
     overflow: hidden;
@@ -792,14 +792,14 @@ body {
     flex-direction: column;
 }
 
-/* 1. ヒーロー専用ヘッダーのスタイル（太くしたい） */
+/* 1. ヒーロー専用ヘッダーのスタイル */
 .hero-header {
     background: #e1d6ff;
     height: 35px; /* ヒーローの高さ */
     padding-left: 15px;
     display: flex;
     align-items: center;
-    border-bottom: 4px solid #6673ee; /* 太い線 */
+    border-bottom: 2px solid #6673ee; 
 }
 
 .win-title-text {
@@ -816,7 +816,7 @@ body {
     aspect-ratio: 19 / 9;
     overflow: hidden;
     position: relative;
-    border-bottom: 4px solid #6673ee;
+    border-bottom: 2px solid #6673ee;
     background: #FFFFFF;
 }
 
@@ -851,7 +851,7 @@ body {
     width: 35px;
     height: 35px;
     background: #FFFFFF;
-    border: 3px solid #6673ee;
+    border: 2px solid #6673ee;
     color: #6673ee;
     border-radius: 50%;
     cursor: pointer;
