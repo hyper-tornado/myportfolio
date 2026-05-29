@@ -679,21 +679,23 @@ body {
 }
 
 .profile-text h2 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     margin-bottom: 5px;
-    color: #4781d9;
+    color: #4582fc;
 }
 
 .job-sub {
-    font-size: 1rem;
-    color: #8fa7ff;
+    font-size: 1.7rem;
+    color: #4382ff;
     font-weight: normal;
+    margin-bottom: 20px;
 }
 
 .intro-lead {
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 20px;
+    margin-top: 16px;
     color: #f783ac;
 }
 
